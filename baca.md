@@ -4,7 +4,7 @@ flood_env adalah nama dari env yg sudah dibuat
 
 <!-- Script Untuk Menjalankan ENV -->
 
-flood_env\Scripts\activate
+nama\Scripts\activate
 
 <!-- Install Ulang Library -->
 
