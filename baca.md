@@ -1,10 +1,14 @@
-<!-- Mulai ENV -->
+<!-- Mulai buat ENV -->
 
-flood_env adalah nama dari env yg sudah dibuat
+python -m venv nama_env
 
 <!-- Script Untuk Menjalankan ENV -->
 
-namaenvnya\Scripts\activate
+nama_env\Scripts\activate
+
+<!-- Menyimpan Dependecies -->
+
+pip freeze > requirements.txt
 
 <!-- Install Ulang Library -->
 
