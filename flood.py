@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 import cv2
 import os
 from sklearn.cluster import KMeans
+from sklearn.metrics import silhouette_score
 
 # Langkah 1: Tentukan path dataset
 dataset_path = "dataset/images"  # Ganti dengan path dataset Anda
@@ -32,7 +33,10 @@ for image_file in image_files:
         continue  # Lanjut ke gambar berikutnya
 
     # Convert ke RGB
-    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+    # image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+    # Convert ke HSV color
+    image = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
+    image = cv2.resize(image, (512, 512))
 
     # Langkah 5: Analisis warna (histogram dan intensitas)
     mean_intensity = np.mean(image, axis=(0, 1))  # Rata-rata intensitas warna (R, G, B)
@@ -45,6 +49,7 @@ for image_file in image_files:
     kmeans = KMeans(n_clusters=2)  # Gunakan 2 cluster (banjir dan non-banjir)
     kmeans.fit(pixel_values)
     labels = kmeans.labels_
+    silhouette_avg = silhouette_score(pixel_values, labels)
 
     # Langkah 8: Bentuk kembali hasil clustering ke bentuk gambar
     segmented_image = labels.reshape(image.shape[0], image.shape[1])
@@ -64,7 +69,8 @@ for image_file in image_files:
         'std_intensity_g': std_intensity[1],
         'std_intensity_b': std_intensity[2],
         'flood_area_pixels': flood_area,
-        'flood_percentage': flood_percentage
+        'flood_percentage': flood_percentage,
+        'silhoutte_score': silhouette_avg,
     }
 
     # Tambahkan hasil ke list
